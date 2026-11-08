@@ -14,6 +14,30 @@ This repository is my copy of the Flask Stack Simulator starter provided by our 
 
 For this pre-demo activity I cloned the starter, explored its files (`app.py`, `stack_model.py`, the templates, and the static CSS/JS), answered the reading activity "Getting Ready for the Flask Stack Simulator," and uploaded the starter files to my own GitHub repository. The displayed count and stack values are static samples, and the TODOs are intentionally left unfinished until the class demonstration.
 
+## Week 12-13: Stack Simulator and Queue Simulator
+
+This repository now contains two completed Flask applications.
+
+| App | Folder | Rule | Operations | Port |
+|-----|--------|------|------------|------|
+| Stack Simulator | repository root | LIFO (Last In, First Out) | Push, Pop, Peek, Clear | 5000 |
+| Queue Simulator | `queue-simulator/` | FIFO (First In, First Out) | Enqueue, Dequeue, Peek, Clear | 5001 |
+
+How to run (Flask must be installed: `pip install -r requirements.txt`):
+
+```
+# Stack Simulator (from the repository root)
+python app.py
+# open http://127.0.0.1:5000
+
+# Queue Simulator (from the queue-simulator folder)
+cd queue-simulator
+python app.py
+# open http://127.0.0.1:5001
+```
+
+In the Queue Simulator, Enqueue appends to the rear of a Python list and Dequeue removes the front element with `pop(0)`. The interface labels the FRONT and REAR items, and shows messages for blank input and for Dequeue or Peek on an empty queue.
+
 ---
 
 # Flask Stack Simulator startup template

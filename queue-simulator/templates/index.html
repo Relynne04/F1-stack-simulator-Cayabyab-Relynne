@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Queue Simulator</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body>
+<main class="container py-4">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+      <p class="notice {{ 'error' if category == 'error' else '' }}" role="status">{{ message }}</p>
+    {% endfor %}
+  {% endwith %}
+<h1>Queue Data Structure Simulator</h1>
+<p>First In, First Out (FIFO): the first value enqueued is the first value dequeued.</p>
+<p>
+  Queue size: <strong>{{ size }}</strong>
+  &nbsp;|&nbsp; Front: <strong>{{ front if size else '-' }}</strong>
+  &nbsp;|&nbsp; Rear: <strong>{{ rear if size else '-' }}</strong>
+</p>
+<div class="row simulator">
+  <section class="col-md-4 operations">
+    <h2>Operations</h2>
+    <form action="{{ url_for('operate') }}" method="POST">
+      <label for="q_data">Data (1 to 24 characters)</label>
+      <input id="q_data" name="value" maxlength="24" class="form-control mb-2" autocomplete="off">
+      <div class="d-grid gap-2">
+        <button type="submit" id="btn_enqueue" name="action" value="enqueue" class="btn btn-success">Enqueue</button>
+        <button type="submit" id="btn_dequeue" name="action" value="dequeue" class="btn btn-danger">Dequeue</button>
+        <button type="submit" id="btn_peek" name="action" value="peek" class="btn btn-warning">Peek</button>
+        <button type="submit" id="btn_clear" name="action" value="clear" class="btn btn-light">Clear</button>
+      </div>
+    </form>
+  </section>
+  <section id="queue" class="col-md-4 stack-area">
+    <h2>Queue data</h2>
+    {% for item in items %}
+      <div class="stack-item{{ ' peek' if highlight and loop.first else '' }}">{{ item }}
+        {% if loop.first and loop.last %}<small>FRONT / REAR</small>
+        {% elif loop.first %}<small>FRONT</small>
+        {% elif loop.last %}<small>REAR</small>{% endif %}
+      </div>
+    {% else %}
+      <p class="error">The queue is empty.</p>
+    {% endfor %}
+    {% if items %}<p class="small">Enqueue adds at the REAR. Dequeue removes from the FRONT.</p>{% endif %}
+  </section>
+  <section id="removed" class="col-md-4 popped-area">
+    <h2>Dequeued (removed) items</h2>
+    {% for item in removed %}
+      <div class="stack-item removed">{{ item }}</div>
+    {% else %}
+      <p>No removed items yet.</p>
+    {% endfor %}
+  </section>
+</div>
+</main>
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+<script src="{{ url_for('static', filename='js/ui.js') }}"></script>
+</body>
+</html>
